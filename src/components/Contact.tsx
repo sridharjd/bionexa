@@ -57,16 +57,16 @@ const Contact = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {/* <Card className="border-0 shadow-md">
+          <Card className="border-0 shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center mb-4">
                 <Mail className="h-6 w-6 text-blue-900 mr-3" />
                 <h3 className="font-semibold text-gray-900">Email Us</h3>
               </div>
-              <p className="text-gray-600">contact@lovable.dev</p>
-              <p className="text-gray-600">support@lovable.dev</p>
+              <p className="text-gray-600">officialbionexa@gmail.com</p>
+              <p className="text-gray-600">Response Time: Less than 24 hours</p>
             </CardContent>
-          </Card> */}
+          </Card>
           <Card className="border-0 shadow-md">
             <CardContent className="p-6">
               <div className="flex items-center mb-4">
