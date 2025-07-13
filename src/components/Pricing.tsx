@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ const Pricing = () => {
     docking: 1,
     adme: 1,
     md: 1,
+    invitro: 1,
     hplc: 1,
     gcms: 1,
     lcms: 1,
@@ -41,6 +42,12 @@ const Pricing = () => {
       unit: "compounds (100 nanoseconds)",
       pricePerUnit: 1500,
       priceAdditional: 500,
+      currency: "₹"
+    },
+    invitro: {
+      name: "In Vitro Studies",
+      unit: "samples",
+      pricePerUnit: 800,
       currency: "₹"
     },
     hplc: {
@@ -105,6 +112,26 @@ const Pricing = () => {
     return sum + calculatePrice(service);
   }, 0);
 
+  // Refs for each table
+  const dockingRef = useRef<HTMLDivElement>(null);
+  const analyticalRef = useRef<HTMLDivElement>(null);
+  const invitroRef = useRef<HTMLDivElement>(null);
+  const [highlight, setHighlight] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (window.location.hash) {
+      const hash = window.location.hash.replace('#', '');
+      setHighlight(hash);
+      let ref: React.RefObject<HTMLDivElement> | null = null;
+      if (["docking", "adme", "md", "discovery"].includes(hash)) ref = dockingRef;
+      else if (["hplc", "gcms", "lcms", "analytical"].includes(hash)) ref = analyticalRef;
+      else if (["invitro", "antimicrobial", "cancer", "fullresearch"].includes(hash)) ref = invitroRef;
+      if (ref && ref.current) {
+        ref.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  }, []);
+
   useEffect(() => {
     if (serviceId && services[serviceId as keyof typeof services]) {
       document.getElementById(serviceId)?.scrollIntoView({ behavior: 'smooth' });
@@ -117,8 +144,131 @@ const Pricing = () => {
       
       <section className="pt-24 pb-20 bg-gradient-to-br from-blue-50 via-white to-indigo-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          
+          {/* Bundle/Service Tables */}
+          <div className="space-y-12 max-w-4xl mx-auto mb-12">
+            {/* Docking & Discovery Table */}
+            <div ref={dockingRef} className={`bg-white rounded-xl shadow-lg p-6 transition-shadow duration-300 scroll-mt-32 ${highlight && ["docking","adme","md","discovery"].includes(highlight) ? "ring-4 ring-blue-300" : ""}`}>
+              <h2 className="text-2xl font-extrabold text-blue-900 mb-6 text-center tracking-tight">Docking & Discovery</h2>
+              <table className="min-w-full rounded-lg overflow-hidden">
+                <thead>
+                  <tr className="bg-gradient-to-r from-blue-100 to-indigo-100">
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Bundle/Service Name</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Services Included (with Minimum Counts)</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Flat Rate (INR)</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Saving (INR)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-800 text-base">
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Docking Pack</td>
+                    <td className="px-6 py-3 border-b">Docking (min 0 – max 100 molecules)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,200</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">ADME Pack</td>
+                    <td className="px-6 py-3 border-b">ADME Screening (min 0 – max 100 molecules)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,200</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Molecular Dynamics (MD)</td>
+                    <td className="px-6 py-3 border-b">MD Simulation (min 2 simulations)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,400</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Discovery Pack</td>
+                    <td className="px-6 py-3 border-b">Docking (0–100) + ADME (0–100) + MD (2 simulations)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 2,999</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 798</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {/* Analytical Table */}
+            <div ref={analyticalRef} className={`bg-white rounded-xl shadow-lg p-6 transition-shadow duration-300 scroll-mt-32 ${highlight && ["hplc","gcms","lcms","analytical"].includes(highlight) ? "ring-4 ring-blue-300" : ""}`}>
+              <h2 className="text-2xl font-extrabold text-blue-900 mb-6 text-center tracking-tight">Analytical</h2>
+              <table className="min-w-full rounded-lg overflow-hidden">
+                <thead>
+                  <tr className="bg-gradient-to-r from-blue-100 to-indigo-100">
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Bundle/Service Name</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Services Included (with Minimum Counts)</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Flat Rate (INR)</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Saving (INR)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-800 text-base">
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">HPLC Analysis</td>
+                    <td className="px-6 py-3 border-b">HPLC (min 1 sample)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,200</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">GC-MS Analysis</td>
+                    <td className="px-6 py-3 border-b">GC-MS (min 1 sample)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,300</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">LC-MS Analysis</td>
+                    <td className="px-6 py-3 border-b">LC-MS (min 1 sample)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,400</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Analytical Suite</td>
+                    <td className="px-6 py-3 border-b">HPLC + GC-MS + LC-MS (each min 1 sample)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 3,599</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 598</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            {/* In Vitro Table */}
+            <div ref={invitroRef} className={`bg-white rounded-xl shadow-lg p-6 transition-shadow duration-300 scroll-mt-32 ${highlight && ["invitro","antimicrobial","cancer","fullresearch"].includes(highlight) ? "ring-4 ring-blue-300" : ""}`}>
+              <h2 className="text-2xl font-extrabold text-blue-900 mb-6 text-center tracking-tight">In Vitro</h2>
+              <table className="min-w-full rounded-lg overflow-hidden">
+                <thead>
+                  <tr className="bg-gradient-to-r from-blue-100 to-indigo-100">
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Bundle/Service Name</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Services Included (with Minimum Counts)</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Flat Rate (INR)</th>
+                    <th className="px-6 py-4 text-lg font-bold text-blue-900 border-b border-gray-200 text-left">Saving (INR)</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-800 text-base">
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Anti-Microbial Testing</td>
+                    <td className="px-6 py-3 border-b">Anti-Microbial Activity (min 1 strain)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 1,600</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Cancer Cell Line Assay</td>
+                    <td className="px-6 py-3 border-b">Cancer Cell Line Testing (min 1 cell line)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 2,000</td>
+                    <td className="px-6 py-3 border-b font-semibold">-</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">In Vitro Pack</td>
+                    <td className="px-6 py-3 border-b">Anti Microbial (min 1 strain) + Cancer Cell Line (min 1 cell line)</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 3,699</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 898</td>
+                  </tr>
+                  <tr className="even:bg-blue-50 hover:bg-blue-100 transition-colors">
+                    <td className="px-6 py-3 border-b">Full Research Package</td>
+                    <td className="px-6 py-3 border-b">All Discovery + Analytical + In Vitro + Scientific Writing + Consultation</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 6,999</td>
+                    <td className="px-6 py-3 border-b font-semibold">₹ 2,497</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
 
+          {/*
           <div className="text-center mb-16">
             <div className="flex items-center justify-center mb-4">
               <Calculator className="h-12 w-12 text-blue-900 mr-4" />
@@ -197,6 +347,7 @@ const Pricing = () => {
               </div>
             </CardContent>
           </Card>
+          */}
         </div>
       </section>
 

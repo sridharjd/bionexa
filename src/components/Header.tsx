@@ -65,7 +65,7 @@ const Header = () => {
               className="text-gray-700 hover:text-blue-900 transition-colors font-medium flex items-center"
             >
               <Calculator className="h-4 w-4 mr-1" />
-              Price Calculator
+              Pricing
             </button>
             <button 
               onClick={() => handleNav('contact')}

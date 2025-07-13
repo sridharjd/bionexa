@@ -1,8 +1,14 @@
 
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const navigate = useNavigate();
+
+  const handleServiceClick = (serviceId: string) => {
+    navigate(`/#services`);
+  };
 
   return (
     <footer className="bg-gray-900 text-white py-12">
@@ -18,52 +24,49 @@ const Footer = () => {
               </p>
             </div>
             
-            <div className="space-y-3">
-              {/* <div className="flex items-center text-gray-300">
+            {/* <div className="space-y-3">
+              <div className="flex items-center text-gray-300">
                 <Mail className="h-5 w-5 mr-3 text-blue-400" />
-                <span>contact@lovable.dev</span>
-              </div> */}
+                <span>officialbionexa@gmail.com</span>
+              </div>
               <div className="flex items-center text-gray-300">
                 <Phone className="h-5 w-5 mr-3 text-blue-400" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 8610235300</span>
               </div>
               <div className="flex items-center text-gray-300">
                 <MessageCircle className="h-5 w-5 mr-3 text-blue-400" />
-                <span>+1 (555) 123-4567</span>
+                <span>+91 8610235300</span>
               </div>
-              {/* <div className="flex items-center text-gray-300">
+              <div className="flex items-center text-gray-300">
                 <MapPin className="h-5 w-5 mr-3 text-blue-400" />
                 <span>Boston, MA, United States</span>
-              </div> */}
-            </div>
+              </div>
+            </div> */}
           </div>
 
-          {/* Services */}
-          <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Services</h4>
-            <ul className="space-y-2 text-gray-300">
-              <li className="hover:text-blue-400 transition-colors cursor-pointer">
-                Molecular Docking
-              </li>
-              <li className="hover:text-blue-400 transition-colors cursor-pointer">
-                ADME Prediction
-              </li>
-              <li className="hover:text-blue-400 transition-colors cursor-pointer">
-                MD Simulations
-              </li>
-              <li className="hover:text-blue-400 transition-colors cursor-pointer">
-                Scientific Writing
-              </li>
-              <li className="hover:text-blue-400 transition-colors cursor-pointer">
-                Results Analysis
-              </li>
-            </ul>
+          {/* Services (removed) and Contact Info moved here */}
+          <div className="flex flex-col justify-center">
+            <h4 className="text-lg font-semibold mb-4 text-white text-center">Contact</h4>
+            <div className="space-y-3 text-gray-300 text-center">
+              <div className="flex items-center justify-center">
+                <Mail className="h-5 w-5 mr-3 text-blue-400" />
+                <span>officialbionexa@gmail.com</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <Phone className="h-5 w-5 mr-3 text-blue-400" />
+                <span>+91 8610235300</span>
+              </div>
+              <div className="flex items-center justify-center">
+                <MessageCircle className="h-5 w-5 mr-3 text-blue-400" />
+                <span>+91 8610235300</span>
+              </div>
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
-            <ul className="space-y-2 text-gray-300">
+            <h4 className="text-lg font-semibold mb-4 text-white text-right">Quick Links</h4>
+            <ul className="space-y-2 text-gray-300 text-right">
               <li>
                 <button 
                   onClick={() => {
@@ -97,20 +100,20 @@ const Footer = () => {
                   Contact
                 </button>
               </li>
-              <li className="hover:text-blue-400 transition-colors cursor-pointer">
+              {/* <li className="hover:text-blue-400 transition-colors cursor-pointer">
                 Privacy Policy
               </li>
               <li className="hover:text-blue-400 transition-colors cursor-pointer">
                 Terms of Service
-              </li>
+              </li> */}
             </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-700 mt-8 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm">
+          <div className="flex flex-col items-center">
+            <p className="text-gray-400 text-sm text-center">
               © {currentYear} BioNexa. All rights reserved.
             </p>
             {/* <div className="flex space-x-6 mt-4 md:mt-0">

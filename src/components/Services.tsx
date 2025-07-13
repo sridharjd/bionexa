@@ -1,14 +1,15 @@
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Atom, FlaskConical, Activity, FileText, MessageSquare, BarChart3, Microscope, TestTube } from "lucide-react";
+import { Atom, FlaskConical, Activity, FileText, MessageSquare, BarChart3, Microscope, TestTube, Beaker } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const Services = () => {
   const navigate = useNavigate();
 
   const handleKnowMore = (serviceId: string) => {
-    navigate(`/pricing?service=${serviceId}`);
+    // Navigate to pricing page and scroll to the relevant table or section
+    navigate(`/pricing#${serviceId}`);
   };
 
   const services = [
@@ -32,6 +33,13 @@ const Services = () => {
       title: "Molecular Dynamics (MD) Simulation",
       description: "Advanced MD simulations to study protein dynamics, conformational changes, and molecular behavior in biological systems.",
       features: ["Protein stability analysis", "Conformational dynamics", "Free energy calculations", "Membrane simulations"]
+    },
+    {
+      id: "invitro",
+      icon: <Beaker className="h-8 w-8 text-blue-900" />,
+      title: "In Vitro Studies",
+      description: "Comprehensive in vitro studies including anti-microbial testing and cancer cell line studies to evaluate compound efficacy and safety.",
+      features: ["Anti-microbial studies", "Cancer cell line studies", "Cytotoxicity assays", "Cell proliferation analysis"]
     },
     {
       id: "hplc",

@@ -73,8 +73,8 @@ const Contact = () => {
                 <Phone className="h-6 w-6 text-blue-900 mr-3" />
                 <h3 className="font-semibold text-gray-900">Call Us</h3>
               </div>
-              <p className="text-gray-600">+1 (555) 123-4567</p>
-              <p className="text-sm text-gray-500">Mon-Fri, 9 AM - 6 PM EST</p>
+              <p className="text-gray-600">+91 8610235300</p>
+              <p className="text-sm text-gray-500">Mon-Fri, 9 AM - 6 PM IST</p>
             </CardContent>
           </Card>
           {/* <Card className="border-0 shadow-md">
@@ -93,7 +93,7 @@ const Contact = () => {
                 <MessageCircle className="h-6 w-6 text-green-600 mr-3" />
                 <h3 className="font-semibold text-gray-900">WhatsApp</h3>
               </div>
-              <p className="text-gray-600">+1 (555) 987-6543</p>
+              <p className="text-gray-600">+91 8610235300</p>
               <p className="text-sm text-gray-500">Chat with us on WhatsApp</p>
             </CardContent>
           </Card>
